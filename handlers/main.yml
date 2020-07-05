@@ -1,0 +1,11 @@
+---
+- name: restart systemd service
+  systemd:
+    name: "{{ item.item.name }}"
+    enabled: "{{ item.item.enabled | default(true) }}"
+    daemon_reload: true
+    state: restarted
+  loop: "{{ _systemd_items.results }}"
+  when:
+    - _systemd_items.results|length > 0
+    - item.changed|bool

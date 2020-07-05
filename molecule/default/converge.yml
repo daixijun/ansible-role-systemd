@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include daixijun.systemd"
+      include_role:
+        name: "daixijun.systemd"
+      vars:
+        systemd_services:
+          - name: app
+            exec_start: /usr/local/bin/app

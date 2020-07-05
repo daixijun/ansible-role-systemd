@@ -1,0 +1,18 @@
+---
+systemd_services: []
+# - name: example
+#   description: ""
+#   documentation: ""
+#   type: simple
+#   exec_start: /bin/cat
+#   exec_reload: /bin/kill -HUP $MAINPID
+#   exec_stop: /bin/kill $MAINPID
+#   working_directory: /tmp
+#   user: nobody
+#   group: nobody
+#   pid_file: ""
+#   restart: on-failure
+#   after: ""
+#   wants: ""
+#   requires: ""
+#   wanted_by: "multi-user.target"

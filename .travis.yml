@@ -1,0 +1,41 @@
+---
+language: python
+python:
+  - 3.7
+  - 3.8
+
+# Install ansible
+addons:
+  apt:
+    packages:
+      - python-pip
+
+env:
+  - MOLECULE_DISTRO=centos7
+  - MOLECULE_DISTRO=centos8
+
+install:
+  # Install ansible
+  - pip install ansible
+
+  # Install molecule
+  - pip install "molecule[docker,lint]"
+
+  # Check ansible version
+  - ansible --version
+
+  # Check molecule version
+  - molecule --version
+
+  # Create ansible.cfg with correct roles_path
+  - printf '[defaults]\nroles_path=../' >ansible.cfg
+
+script:
+  - cd ..
+  - ln -sf ansible-role-systemd daixijun.systemd
+  - cd daixijun.systemd
+  - molecule test
+
+notifications:
+  email: false
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

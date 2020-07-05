@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  tasks:
+    - name: Copy test app to target server
+      copy:
+        src: app
+        dest: /usr/local/bin/app
+        owner: nobody
+        group: nobody
+        mode: "0755"

@@ -1,0 +1,30 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description={{ item.description | default(item.name) }}
+{% if item.documentation is defined %}
+Documentation={{ item.document }}
+{% endif %}
+{% if item.after is defined %}
+After={{ item.after }}
+{% endif %}
+{% if item.wants is defined %}
+Wants={{ item.wants }}
+{% endif %}
+
+[Service]
+{% if item.pid_file is defined %}
+PIDFile={{ item.pid_file }}
+{% endif %}
+ExecStart={{ item.exec_start }}
+ExecReload={{ item.exec_reload | default('/bin/kill -HUP $MAINPID') }}
+{% if item.exec_stop is defined %}
+ExecStop={{ item.exec_stop }}
+{% endif %}
+Type={{ item.type | default('simple') }}
+Restart={{ item.restart | default('on-failure') }}
+User={{ item.user | default('nobody') }}
+Group={{ item.group | default('nobody') }}
+# RestartSec=30s
+
+[Install]
+WantedBy={{ item.wanted_by | default('multi-user.target') }}

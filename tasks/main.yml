@@ -1,0 +1,11 @@
+---
+- name: Ensure service configuration
+  template:
+    src: app.service.j2
+    dest: /etc/systemd/system/{{ item.name }}.service
+  loop: "{{ systemd_services }}"
+  register: _systemd_items
+  when:
+    - systemd_services|length > 0
+  notify:
+    - restart systemd service

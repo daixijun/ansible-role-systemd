@@ -1,0 +1,24 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: populate service facts
+      service_facts:
+
+    - name: assert that app.service is running
+      assert:
+        that:
+          - "'app.service' in ansible_facts.services"
+          - ansible_facts.services['app.service'].state == 'running'
+          - ansible_facts.services['app.service'].status == 'enabled'
+
+    - name: http get
+      uri:
+        url: http://localhost:8080
+        return_content: true
+        method: GET
+      register: response_body
+      failed_when: "'Hello World' not in response_body.content"
