@@ -24,7 +24,8 @@ Type={{ item.type | default('simple') }}
 Restart={{ item.restart | default('on-failure') }}
 User={{ item.user | default('nobody') }}
 Group={{ item.group | default('nobody') }}
-# RestartSec=30s
+RestartSec={{ item.restart_sec | default("10s") }}
+WorkingDirectory={{ item.working_directory | default("/tmp") }}
 
 [Install]
 WantedBy={{ item.wanted_by | default('multi-user.target') }}
